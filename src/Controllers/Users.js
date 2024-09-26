@@ -60,7 +60,7 @@ const forgotPassword = async (req, res) => {
         email: user.email,
         id: user._id,
       });
-      const resetUrl = `https://localhost:8000/reset-password/${token}`;
+      const resetUrl = `https://ecommerce-landing-newpage.netlify.app/reset-password/${token}`;
       const emailContent = {
         to: user.email,
         subject: "Reset Password Request",
