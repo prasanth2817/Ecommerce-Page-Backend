@@ -1,5 +1,6 @@
 import usersModel from "../Models/Users.js";
 import Auth from "../Common/Auth.js";
+import EmailService from "../Common/EmailService.js";
 
 const createUsers = async (req, res) => {
   try {
@@ -47,7 +48,7 @@ const Login = async (req, res) => {
   }
 };
 
-const forgotPassword = async (req, res) => {
+const forgetPassword = async (req, res) => {
   try {
     const user = await usersModel.findOne(
       { email: req.body.email },
@@ -67,8 +68,7 @@ const forgotPassword = async (req, res) => {
         text: `Dear ${user.firstName},\n\nWe received a request to reset your password. Click the link below to reset your password:\n\n${resetUrl}`,
         html: `<p>Dear ${user.firstName},</p><p>We received a request to reset your password. Click the link below to reset your password:</p><p><a href="${resetUrl}">${resetUrl}</a></p>`,
       };
-      await emailService.sendMail(emailContent);
-
+      await EmailService.sendMail(emailContent);
       res.status(200).send({
         message: "The password reset link has been sent to your email.",
       });
@@ -114,6 +114,6 @@ const resetPassword = async (req, res) => {
 export default {
   createUsers,
   Login,
-  forgotPassword,
+  forgetPassword,
   resetPassword,
 };
